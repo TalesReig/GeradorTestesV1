@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using GeradorTestes.Dominio;
 using GeradorTestes.Dominio.ModuloQuestao;
 using System.Collections.Generic;
 
@@ -6,13 +7,16 @@ namespace eAgenda.Infra.Arquivos.ModuloQuestao
 {
     public class RepositorioQuestaoEmArquivo : RepositorioEmArquivoBase<Questao>, IRepositorioQuestao
     {
-        public RepositorioQuestaoEmArquivo(GeradorTesteJsonContext dataContext) : base(dataContext)
+        protected GeradorTesteJsonContext contextoDados;
+
+        public RepositorioQuestaoEmArquivo(IContextoDados contexto)
         {
+            contextoDados = contexto as GeradorTesteJsonContext;
         }
 
         public override List<Questao> ObterRegistros()
         {
-            return dataContext.Questoes;
+            return contextoDados.Questoes;
         }
 
     }

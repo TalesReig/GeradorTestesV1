@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GeradorTestes.Dominio\GeradorTestes.Dominio.csproj" />
+    <ProjectReference Include="..\GeradorTestes.Infra.Arquivos\GeradorTestes.Infra.Arquivos.csproj" />
+    <ProjectReference Include="..\GeradorTestes.Infra.Orm\GeradorTestes.Infra.Orm.csproj" />
+    <ProjectReference Include="..\GeradorTestes.Infra.Sql\GeradorTestes.Infra.Sql.csproj" />
+  </ItemGroup>
+
+</Project>

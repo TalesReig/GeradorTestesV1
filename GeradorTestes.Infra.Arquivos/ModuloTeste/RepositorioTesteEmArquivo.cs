@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+﻿using GeradorTestes.Dominio;
 using GeradorTestes.Dominio.ModuloTeste;
 using System.Collections.Generic;
 
@@ -6,13 +6,16 @@ namespace eAgenda.Infra.Arquivos.ModuloTeste
 {
     public class RepositorioTesteEmArquivo : RepositorioEmArquivoBase<Teste>, IRepositorioTeste
     {
-        public RepositorioTesteEmArquivo(GeradorTesteJsonContext context) : base(context)
+        protected GeradorTesteJsonContext contextoDados;
+
+        public RepositorioTesteEmArquivo(IContextoDados contexto)
         {
-        }      
+            contextoDados = contexto as GeradorTesteJsonContext;
+        }
 
         public override List<Teste> ObterRegistros()
         {
-            return dataContext.Testes;
+            return contextoDados.Testes;
         }
 
     }

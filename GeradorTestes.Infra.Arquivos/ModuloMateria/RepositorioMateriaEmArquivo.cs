@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using GeradorTestes.Dominio;
 using GeradorTestes.Dominio.ModuloMateria;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +8,21 @@ namespace eAgenda.Infra.Arquivos.ModuloMateria
 {
     public class RepositorioMateriaEmArquivo : RepositorioEmArquivoBase<Materia>, IRepositorioMateria
     {
-        public RepositorioMateriaEmArquivo(GeradorTesteJsonContext dataContext) : base(dataContext)
+        protected GeradorTesteJsonContext contextoDados;
+
+        public RepositorioMateriaEmArquivo(IContextoDados contexto)
         {
+            contextoDados = contexto as GeradorTesteJsonContext;
         }
-     
+
         public override List<Materia> ObterRegistros()
         {
-            return dataContext.Materias;
+            return contextoDados.Materias;
         }
 
         public Materia SelecionarMateriaPorNome(string nome)
         {
-            return dataContext.Materias.Where(x => x.Nome == nome).FirstOrDefault();
+            return contextoDados.Materias.Where(x => x.Nome == nome).FirstOrDefault();
         }
     }
 }

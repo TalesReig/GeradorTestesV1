@@ -113,11 +113,13 @@ namespace GeradorTeste.ConsoleApp
         {
             var dbContext = new GeradorTesteDbContext();
 
-            dbContext.Disciplinas.RemoveRange(dbContext.Disciplinas);
-
-            dbContext.Materias.RemoveRange(dbContext.Materias);
+            dbContext.Testes.RemoveRange(dbContext.Testes);
 
             dbContext.Questoes.RemoveRange(dbContext.Questoes);
+            
+            dbContext.Materias.RemoveRange(dbContext.Materias);
+
+            dbContext.Disciplinas.RemoveRange(dbContext.Disciplinas);
 
             dbContext.SaveChanges();
         }

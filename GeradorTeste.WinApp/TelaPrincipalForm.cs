@@ -1,22 +1,9 @@
-﻿using eAgenda.Infra.Arquivos;
-using eAgenda.Infra.Arquivos.ModuloDisciplina;
-using eAgenda.Infra.Arquivos.ModuloMateria;
-using eAgenda.Infra.Arquivos.ModuloQuestao;
-using eAgenda.Infra.Arquivos.ModuloTeste;
+﻿using GeradorTeste.WinApp.Compartilhado.Ioc;
 using GeradorTeste.WinApp.ModuloDisciplina;
 using GeradorTeste.WinApp.ModuloMateria;
 using GeradorTeste.WinApp.ModuloQuestao;
 using GeradorTeste.WinApp.ModuloTeste;
-using GeradorTestes.Aplicacao.ModuloDisciplina;
-using GeradorTestes.Aplicacao.ModuloMateria;
-using GeradorTestes.Aplicacao.ModuloQuestao;
-using GeradorTestes.Aplicacao.ModuloTeste;
-using GeradorTestes.Dominio.ModuloDisciplina;
-using GeradorTestes.Dominio.ModuloMateria;
-using GeradorTestes.Dominio.ModuloQuestao;
-using GeradorTestes.Dominio.ModuloTeste;
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace GeradorTeste.WinApp
@@ -24,10 +11,9 @@ namespace GeradorTeste.WinApp
     public partial class TelaPrincipalForm : Form
     {
         private ControladorBase controlador;
-        private Dictionary<string, ControladorBase> controladores;
-        private GeradorTesteJsonContext contextoDados;
+        private readonly IServiceLocator serviceLocator;
 
-        public TelaPrincipalForm(GeradorTesteJsonContext contextoDados)
+        public TelaPrincipalForm(IServiceLocator serviceLocator)
         {
             InitializeComponent();
 
@@ -35,10 +21,7 @@ namespace GeradorTeste.WinApp
 
             labelRodape.Text = string.Empty;
             labelTipoCadastro.Text = string.Empty;
-
-            this.contextoDados = contextoDados;
-
-            InicializarControladores();
+            this.serviceLocator = serviceLocator;
         }
 
         public static TelaPrincipalForm Instancia
@@ -52,39 +35,24 @@ namespace GeradorTeste.WinApp
             labelRodape.Text = mensagem;
         }
 
-        private void tarefasMenuItem_Click(object sender, EventArgs e)
+        private void disciplinasMenuItem_Click(object sender, EventArgs e)
         {
-            ConfigurarTelaPrincipal((ToolStripMenuItem)sender);
-        }
-
-        private void contatosMenuItem_Click(object sender, EventArgs e)
-        {
-            ConfigurarTelaPrincipal((ToolStripMenuItem)sender);
-        }
-
-        private void compromissosMenuItem_Click(object sender, EventArgs e)
-        {
-            ConfigurarTelaPrincipal((ToolStripMenuItem)sender);
-        }
-
-        private void despesasMenuItem_Click(object sender, EventArgs e)
-        {
-            ConfigurarTelaPrincipal((ToolStripMenuItem)sender);
-        }
+            ConfigurarTelaPrincipal(serviceLocator.Get<ControladorDisciplina>());
+        }       
 
         private void materiasMenuItem_Click(object sender, EventArgs e)
         {
-            ConfigurarTelaPrincipal((ToolStripMenuItem)sender);
+            ConfigurarTelaPrincipal(serviceLocator.Get<ControladorMateria>());
         }
 
         private void questoesMenuItem_Click(object sender, EventArgs e)
         {
-            ConfigurarTelaPrincipal((ToolStripMenuItem)sender);
+            ConfigurarTelaPrincipal(serviceLocator.Get<ControladorQuestao>()); 
         }
 
         private void testesMenuItem_Click(object sender, EventArgs e)
         {
-            ConfigurarTelaPrincipal((ToolStripMenuItem)sender);
+            ConfigurarTelaPrincipal(serviceLocator.Get<ControladorTeste>());
         }
 
         private void btnInserir_Click(object sender, EventArgs e)
@@ -143,11 +111,9 @@ namespace GeradorTeste.WinApp
             btnVisualizar.ToolTipText = configuracao.TooltipVisualizar;
         }
 
-        private void ConfigurarTelaPrincipal(ToolStripMenuItem opcaoSelecionada)
+        private void ConfigurarTelaPrincipal(ControladorBase controlador)
         {
-            var tipo = opcaoSelecionada.Text;
-
-            controlador = controladores[tipo];
+            this.controlador = controlador;
 
             ConfigurarToolbox();
 
@@ -181,28 +147,6 @@ namespace GeradorTeste.WinApp
             listagemControl.Dock = DockStyle.Fill;
 
             panelRegistros.Controls.Add(listagemControl);
-        }
-
-        private void InicializarControladores()
-        {
-            controladores = new Dictionary<string, ControladorBase>();
-
-            IRepositorioDisciplina repositorioDisciplina = new RepositorioDisciplinaEmArquivo(contextoDados);
-            ServicoDisciplina servicoDisciplina = new ServicoDisciplina(repositorioDisciplina);
-            controladores.Add("Disciplinas", new ControladorDisciplina(servicoDisciplina));
-
-            IRepositorioMateria repositorioMateria = new RepositorioMateriaEmArquivo(contextoDados);
-            ServicoMateria servicoMateria = new ServicoMateria(repositorioMateria);
-            controladores.Add("Matérias", new ControladorMateria(servicoMateria, servicoDisciplina));
-
-            IRepositorioQuestao repositorioQuestao = new RepositorioQuestaoEmArquivo(contextoDados);
-            ServicoQuestao servicoQuestao = new ServicoQuestao(repositorioQuestao);
-            controladores.Add("Questões", new ControladorQuestao(servicoQuestao, servicoDisciplina));
-
-            IRepositorioTeste repositorioTeste = new RepositorioTesteEmArquivo(contextoDados);
-            ServicoTeste servicoTeste = new ServicoTeste(repositorioTeste);
-
-            controladores.Add("Testes", new ControladorTeste(servicoTeste, servicoQuestao, servicoDisciplina, servicoMateria));
-        }
+        }        
     }
 }

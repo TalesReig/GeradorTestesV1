@@ -1,0 +1,9 @@
+{
+  "ConfiguracaoLogs": {
+    "DiretorioSaida": "D:\\logs\\GeradorTestes"
+  },
+
+  "ConnectionStrings": {
+    "SqlServer": "Data Source=(LOCALDB)\\MSSQLLOCALDB;Initial Catalog=DbGeradorTestesOrm;Integrated Security=True"
+  }
+}

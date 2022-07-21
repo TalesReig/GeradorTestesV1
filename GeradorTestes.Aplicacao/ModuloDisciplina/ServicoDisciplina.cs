@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentResults;
+using GeradorTestes.Dominio;
 using GeradorTestes.Dominio.ModuloDisciplina;
 using Serilog;
 
@@ -12,10 +13,12 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
     public class ServicoDisciplina
     {
         private IRepositorioDisciplina repositorioDisciplina;
+        private IContextoDados contexto;
 
-        public ServicoDisciplina(IRepositorioDisciplina repositorioDisciplina)
+        public ServicoDisciplina(IRepositorioDisciplina repositorioDisciplina, IContextoDados contexto)
         {
             this.repositorioDisciplina = repositorioDisciplina;
+            this.contexto = contexto;
         }
 
         public Result<Disciplina> Inserir(Disciplina disciplina)
@@ -30,6 +33,8 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
             try
             {
                 repositorioDisciplina.Inserir(disciplina);
+
+                contexto.GravarDados();
 
                 Log.Logger.Information("Disciplina {DisciplinaId} inserida com sucesso", disciplina.Id);
 
@@ -58,6 +63,8 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
             {
                 repositorioDisciplina.Editar(disciplina);
 
+                contexto.GravarDados();
+
                 Log.Logger.Information("Disciplina {DisciplinaId} editada com sucesso", disciplina.Id);
             }
             catch (Exception ex)
@@ -80,6 +87,8 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
             {
                 repositorioDisciplina.Excluir(disciplina);
 
+                contexto.GravarDados();
+
                 Log.Logger.Information("Disciplina {DisciplinaId} editada com sucesso", disciplina.Id);
 
                 return Result.Ok();
@@ -100,7 +109,11 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
 
             try
             {
-                return Result.Ok(repositorioDisciplina.SelecionarTodos());
+                var disciplinas = repositorioDisciplina.SelecionarTodos();
+
+                Log.Logger.Information("Disciplinas selecionadas com sucesso");
+
+                return Result.Ok(disciplinas);
             }
             catch (Exception ex)
             {
@@ -114,12 +127,20 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
 
         public Result<Disciplina> SelecionarPorId(Guid id)
         {
+            Log.Logger.Debug("Tentando selecionar disciplina {DisciplinaId}...", id);
+
             try
             {
                 var disciplina = repositorioDisciplina.SelecionarPorId(id);
 
                 if (disciplina == null)
-                    return Result.Fail("Disciplina não encontrado");
+                {
+                    Log.Logger.Warning("Disciplina {DisciplinaId} não encontrada", id);
+
+                    return Result.Fail("Disciplina não encontrada");
+                }
+
+                Log.Logger.Information("Disciplina {DisciplinaId} selecionada com sucesso", id);
 
                 return Result.Ok(disciplina);
             }
@@ -133,6 +154,7 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
             }
         }
 
+        #region Métodos Privados
         private Result ValidarDisciplina(Disciplina disciplina)
         {
             var validador = new ValidadorDisciplina();
@@ -164,6 +186,8 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
             return disciplinaEncontrado != null &&
                    disciplinaEncontrado.Nome == disciplina.Nome &&
                    disciplinaEncontrado.Id != disciplina.Id;
-        }       
+        }
+
+        #endregion
     }
 }

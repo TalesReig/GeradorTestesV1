@@ -6,14 +6,7 @@ using System.Linq;
 namespace eAgenda.Infra.Arquivos
 {
     public abstract class RepositorioEmArquivoBase<T> where T : EntidadeBase<T>
-    {
-        protected GeradorTesteJsonContext dataContext;
-
-        public RepositorioEmArquivoBase(GeradorTesteJsonContext dataContext)
-        {
-            this.dataContext = dataContext;
-        }
-
+    {       
         public abstract List<T> ObterRegistros();
         
         public virtual void Inserir(T novoRegistro)

@@ -1,4 +1,5 @@
-﻿using GeradorTestes.Dominio.ModuloDisciplina;
+﻿using GeradorTestes.Dominio;
+using GeradorTestes.Dominio.ModuloDisciplina;
 using GeradorTestes.Dominio.ModuloMateria;
 using GeradorTestes.Dominio.ModuloQuestao;
 using GeradorTestes.Dominio.ModuloTeste;
@@ -9,7 +10,7 @@ using System.Linq;
 namespace eAgenda.Infra.Arquivos
 {
     [Serializable]
-    public class GeradorTesteJsonContext //Container
+    public class GeradorTesteJsonContext : IContextoDados
     {
         private readonly ISerializador serializador;
 

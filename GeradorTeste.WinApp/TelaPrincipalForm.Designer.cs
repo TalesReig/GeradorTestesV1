@@ -83,7 +83,7 @@
             this.disciplinaMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
             this.disciplinaMenuItem.Size = new System.Drawing.Size(149, 22);
             this.disciplinaMenuItem.Text = "Disciplinas";
-            this.disciplinaMenuItem.Click += new System.EventHandler(this.tarefasMenuItem_Click);
+            this.disciplinaMenuItem.Click += new System.EventHandler(this.disciplinasMenuItem_Click);
             // 
             // materiasMenuItem
             // 
