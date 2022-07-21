@@ -26,11 +26,7 @@ namespace GeradorTestes.Dominio.ModuloTeste
 
         public Disciplina Disciplina { get; set; }
 
-        public Guid DisciplinaId { get; set; }
-
         public Materia Materia { get; set; }
-
-        public Guid MateriaId { get; set; }
 
         public int QuantidadeQuestoes { get; set; }
 

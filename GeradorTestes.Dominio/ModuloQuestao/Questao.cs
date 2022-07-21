@@ -27,8 +27,6 @@ namespace GeradorTestes.Dominio.ModuloQuestao
 
         public Materia Materia { get; set; }
 
-        public Guid MateriaId { get; set; }
-
         public List<Teste> Testes { get; set; }
 
         public bool AdicionarAlternativa(Alternativa alternativa)
@@ -108,7 +106,6 @@ namespace GeradorTestes.Dominio.ModuloQuestao
                 return;
 
             Materia = materia;
-            MateriaId = materia.Id;
             Materia.AdicionaQuestao(this);
         }
 

@@ -23,8 +23,6 @@ namespace GeradorTestes.Dominio.ModuloMateria
 
         public Disciplina Disciplina { get; set; }
 
-        public Guid DisciplinaId { get; set; }
-
         public List<Questao> Questoes { get; set; }
 
         public void AdicionaQuestao(Questao questao)
@@ -49,7 +47,6 @@ namespace GeradorTestes.Dominio.ModuloMateria
                 return;
 
             Disciplina = disciplina;
-            DisciplinaId = disciplina.Id;
             Disciplina.AdicionarMateria(this);
         }
 

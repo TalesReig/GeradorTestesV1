@@ -14,8 +14,6 @@ namespace GeradorTestes.Dominio.ModuloQuestao
 
         public Questao Questao { get; set; }
 
-        public Guid QuestaoId { get; set; }
-
         public string Resposta { get; set; }
 
         public override void Atualizar(Alternativa registro)
