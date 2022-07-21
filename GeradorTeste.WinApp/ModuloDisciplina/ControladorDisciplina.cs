@@ -8,7 +8,7 @@ namespace GeradorTeste.WinApp.ModuloDisciplina
     public class ControladorDisciplina : ControladorBase
     {
         private ServicoDisciplina servicoDisciplina;
-        
+
         private TabelaDisciplinasControl tabelaDisciplinas;
 
 

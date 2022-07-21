@@ -62,7 +62,7 @@ namespace GeradorTestes.Dominio.ModuloTeste
             }
 
             if (questoesSelecionadas.Count >= QuantidadeQuestoes)
-                Questoes = questoesSelecionadas.Randomize(QuantidadeQuestoes).ToList();            
+                Questoes = questoesSelecionadas.Randomize(QuantidadeQuestoes).ToList();
             else
                 Questoes = questoesSelecionadas.Randomize().ToList();
         }
@@ -81,7 +81,7 @@ namespace GeradorTestes.Dominio.ModuloTeste
         public Teste Clone()
         {
             return MemberwiseClone() as Teste;
-        }      
+        }
 
         public void ConfigurarMateria(Materia materia)
         {

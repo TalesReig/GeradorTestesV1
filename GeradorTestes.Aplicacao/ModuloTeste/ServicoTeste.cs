@@ -1,21 +1,22 @@
 ﻿using FluentResults;
+using GeradorTestes.Dominio;
 using GeradorTestes.Dominio.ModuloTeste;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GeradorTestes.Aplicacao.ModuloTeste
 {
     public class ServicoTeste
     {
         private IRepositorioTeste repositorioTeste;
+        private IContextoDados contextoDados;
 
-        public ServicoTeste(IRepositorioTeste repositorioTeste)
+        public ServicoTeste(IRepositorioTeste repositorioTeste, IContextoDados contextoDados)
         {
             this.repositorioTeste = repositorioTeste;
+            this.contextoDados = contextoDados;
         }
 
         public Result<Teste> Inserir(Teste teste)
@@ -31,6 +32,8 @@ namespace GeradorTestes.Aplicacao.ModuloTeste
             {
                 repositorioTeste.Inserir(teste);
 
+                contextoDados.GravarDados();
+
                 Log.Logger.Information("Teste {TesteId} inserido com sucesso", teste.Id);
 
                 return Result.Ok(teste);
@@ -44,7 +47,7 @@ namespace GeradorTestes.Aplicacao.ModuloTeste
                 return Result.Fail(msgErro);
             }
         }
-      
+
         public Result Excluir(Teste teste)
         {
             Log.Logger.Debug("Tentando excluir teste... {@t}", teste);
@@ -52,6 +55,8 @@ namespace GeradorTestes.Aplicacao.ModuloTeste
             try
             {
                 repositorioTeste.Excluir(teste);
+
+                contextoDados.GravarDados();
 
                 Log.Logger.Information("Teste {TesteId} editada com sucesso", teste.Id);
 
@@ -73,7 +78,11 @@ namespace GeradorTestes.Aplicacao.ModuloTeste
 
             try
             {
-                return Result.Ok(repositorioTeste.SelecionarTodos());
+                var testes = repositorioTeste.SelecionarTodos();
+
+                Log.Logger.Information("Testes selecionados com sucesso");
+
+                return Result.Ok(testes);
             }
             catch (Exception ex)
             {
@@ -92,7 +101,11 @@ namespace GeradorTestes.Aplicacao.ModuloTeste
                 var teste = repositorioTeste.SelecionarPorId(id);
 
                 if (teste == null)
+                {
+                    Log.Logger.Warning("Teste {TesteId} não encontrado", id);
+
                     return Result.Fail("Teste não encontrado");
+                }
 
                 return Result.Ok(teste);
             }
@@ -106,6 +119,7 @@ namespace GeradorTestes.Aplicacao.ModuloTeste
             }
         }
 
+        #region Métodos Privados
         private Result ValidarTeste(Teste teste)
         {
             var validador = new ValidadorTeste();
@@ -126,5 +140,6 @@ namespace GeradorTestes.Aplicacao.ModuloTeste
 
             return Result.Ok();
         }
+        #endregion
     }
 }

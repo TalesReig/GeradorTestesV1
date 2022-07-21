@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using FluentValidation.Results;
 using GeradorTestes.Dominio;
 using GeradorTestes.Dominio.ModuloDisciplina;
 using GeradorTestes.Dominio.ModuloMateria;
@@ -20,7 +19,7 @@ namespace GeradorTeste.WinApp.ModuloMateria
             this.ConfigurarTela();
             CarregarDisciplinas(disciplinas);
             CarregarSeries();
-            
+
         }
 
         public Materia Materia

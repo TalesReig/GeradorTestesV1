@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using GeradorTestes.Dominio;
+﻿using GeradorTestes.Dominio;
 using GeradorTestes.Dominio.ModuloQuestao;
 using System.Collections.Generic;
 

@@ -9,7 +9,7 @@ namespace eAgenda.Infra.Arquivos.ModuloDisciplina
     public class RepositorioDisciplinaEmArquivo : RepositorioEmArquivoBase<Disciplina>, IRepositorioDisciplina
     {
         protected GeradorTesteJsonContext contextoDados;
-       
+
         public RepositorioDisciplinaEmArquivo(IContextoDados contexto)
         {
             contextoDados = contexto as GeradorTesteJsonContext;
@@ -23,6 +23,11 @@ namespace eAgenda.Infra.Arquivos.ModuloDisciplina
         public Disciplina SelecionarDisciplinaPorNome(string nome)
         {
             return contextoDados.Disciplinas.Where(x => x.Nome == nome).FirstOrDefault();
+        }
+
+        public List<Disciplina> SelecionarTodos(bool incluirMaterias = false, bool incluirQuestoesDasMaterias = false)
+        {
+            return ObterRegistros();
         }
     }
 }

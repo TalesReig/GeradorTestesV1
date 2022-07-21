@@ -25,7 +25,7 @@ namespace GeradorTestes.Dominio.ModuloDisciplina
             return todasQuestoes;
         }
 
-        public List<Materia> Materias { get; set; } 
+        public List<Materia> Materias { get; set; }
 
         public string Nome { get; set; }
 

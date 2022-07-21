@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using GeradorTestes.Dominio.ModuloMateria;
-using System;
 
 namespace GeradorTestes.Dominio.ModuloTeste
 {
@@ -27,7 +26,7 @@ namespace GeradorTestes.Dominio.ModuloTeste
 
             }).Otherwise(() =>
             {
-                RuleFor(x => x.Materia).NotNull().Custom(MateriaNaoPodeSerNulo).Custom(MateriaDeveTerQuestoes);                
+                RuleFor(x => x.Materia).NotNull().Custom(MateriaNaoPodeSerNulo).Custom(MateriaDeveTerQuestoes);
             });
 
             RuleFor(x => x.QuantidadeQuestoes)
@@ -44,6 +43,6 @@ namespace GeradorTestes.Dominio.ModuloTeste
         {
             if (materia == null)
                 ctx.AddFailure(new ValidationFailure("Materia", "Matéria não podem estar em branco"));
-        }       
+        }
     }
 }

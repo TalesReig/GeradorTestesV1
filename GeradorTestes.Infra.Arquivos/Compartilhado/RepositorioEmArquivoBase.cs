@@ -6,9 +6,9 @@ using System.Linq;
 namespace eAgenda.Infra.Arquivos
 {
     public abstract class RepositorioEmArquivoBase<T> where T : EntidadeBase<T>
-    {       
+    {
         public abstract List<T> ObterRegistros();
-        
+
         public virtual void Inserir(T novoRegistro)
         {
             var registros = ObterRegistros();

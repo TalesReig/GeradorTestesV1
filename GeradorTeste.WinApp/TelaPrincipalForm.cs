@@ -38,7 +38,7 @@ namespace GeradorTeste.WinApp
         private void disciplinasMenuItem_Click(object sender, EventArgs e)
         {
             ConfigurarTelaPrincipal(serviceLocator.Get<ControladorDisciplina>());
-        }       
+        }
 
         private void materiasMenuItem_Click(object sender, EventArgs e)
         {
@@ -47,7 +47,7 @@ namespace GeradorTeste.WinApp
 
         private void questoesMenuItem_Click(object sender, EventArgs e)
         {
-            ConfigurarTelaPrincipal(serviceLocator.Get<ControladorQuestao>()); 
+            ConfigurarTelaPrincipal(serviceLocator.Get<ControladorQuestao>());
         }
 
         private void testesMenuItem_Click(object sender, EventArgs e)
@@ -147,6 +147,6 @@ namespace GeradorTeste.WinApp
             listagemControl.Dock = DockStyle.Fill;
 
             panelRegistros.Controls.Add(listagemControl);
-        }        
+        }
     }
 }

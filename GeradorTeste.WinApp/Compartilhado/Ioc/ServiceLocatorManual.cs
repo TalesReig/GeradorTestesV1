@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using eAgenda.Infra.Arquivos;
-using eAgenda.Infra.Arquivos.ModuloDisciplina;
+﻿using eAgenda.Infra.Arquivos;
 using eAgenda.Infra.Arquivos.ModuloMateria;
 using eAgenda.Infra.Arquivos.ModuloQuestao;
 using eAgenda.Infra.Arquivos.ModuloTeste;
@@ -19,21 +17,20 @@ using GeradorTestes.Dominio.ModuloQuestao;
 using GeradorTestes.Dominio.ModuloTeste;
 using GeradorTestes.Infra.Orm;
 using GeradorTestes.Infra.Orm.ModuloDisciplina;
+using GeradorTestes.Infra.Orm.ModuloMateria;
+using GeradorTestes.Infra.Orm.ModuloQuestao;
+using GeradorTestes.Infra.Orm.ModuloTeste;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.IO;
 
 namespace GeradorTeste.WinApp.Compartilhado.Ioc
 {
     public class ServiceLocatorManual : IServiceLocator
     {
-        enum TipoPersistencia
-        {
-            Arquivo, Orm
-        }
-
         private TipoPersistencia tipoPersistencia = TipoPersistencia.Orm;
 
         private Dictionary<string, ControladorBase> controladores;
-
-        private IContextoDados contextoDados;
 
         private IRepositorioDisciplina repositorioDisciplina;
         private IRepositorioMateria repositorioMateria;
@@ -57,44 +54,66 @@ namespace GeradorTeste.WinApp.Compartilhado.Ioc
         }
 
         private void ConfigurarControladores()
-        {            
-            ConfiguraRepositorios();
-            
+        {
+            var contextoDados = ObterContextoDados();
+
+            ConfigurarRepositorios(contextoDados);
+
             var servicoDisciplina = new ServicoDisciplina(repositorioDisciplina, contextoDados);
             controladores.Add("ControladorDisciplina", new ControladorDisciplina(servicoDisciplina));
-            
-            var servicoMateria = new ServicoMateria(repositorioMateria);
+
+            var servicoMateria = new ServicoMateria(repositorioMateria, contextoDados);
             controladores.Add("ControladorMateria", new ControladorMateria(servicoMateria, servicoDisciplina));
-            
-            var servicoQuestao = new ServicoQuestao(repositorioQuestao);
+
+            var servicoQuestao = new ServicoQuestao(repositorioQuestao, contextoDados);
             controladores.Add("ControladorQuestao", new ControladorQuestao(servicoQuestao, servicoDisciplina));
-           
-            var servicoTeste = new ServicoTeste(repositorioTeste);
-            controladores.Add("ControladorTeste", new ControladorTeste(servicoTeste, servicoQuestao, servicoDisciplina, servicoMateria));
+
+            var servicoTeste = new ServicoTeste(repositorioTeste, contextoDados);
+            controladores.Add("ControladorTeste", new ControladorTeste(servicoTeste, servicoDisciplina));
         }
 
-        private void ConfiguraRepositorios()
+        private void ConfigurarRepositorios(IContextoDados contextoDados)
         {
-            if (tipoPersistencia == TipoPersistencia.Arquivo)
+            if (tipoPersistencia == TipoPersistencia.Orm)
+            {
+                repositorioDisciplina = new RepositorioDisciplinaOrm(contextoDados);
+                repositorioMateria = new RepositorioMateriaOrm(contextoDados);
+                repositorioQuestao = new RepositorioQuestaoOrm(contextoDados);
+                repositorioTeste = new RepositorioTesteOrm(contextoDados);
+            }
+            else
+            {
+                repositorioMateria = new RepositorioMateriaEmArquivo(contextoDados);
+                repositorioQuestao = new RepositorioQuestaoEmArquivo(contextoDados);
+                repositorioTeste = new RepositorioTesteEmArquivo(contextoDados);
+
+            }
+        }
+
+        private IContextoDados ObterContextoDados()
+        {
+            if (tipoPersistencia == TipoPersistencia.Orm)
+            {
+                var configuracao = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("ConfiguracaoAplicacao.json")
+                    .Build();
+
+                var connectionString = configuracao.GetConnectionString("SqlServer");
+
+                return new GeradorTesteDbContext(connectionString);
+            }
+            else
             {
                 var serializador = new SerializadorDadosEmJsonDotnet();
 
-                contextoDados = new GeradorTesteJsonContext(serializador);
-
-                repositorioDisciplina = new RepositorioDisciplinaEmArquivo(contextoDados);
-
-                repositorioMateria = new RepositorioMateriaEmArquivo(contextoDados);
-
-                repositorioQuestao = new RepositorioQuestaoEmArquivo(contextoDados);
-
-                repositorioTeste = new RepositorioTesteEmArquivo(contextoDados);
+                return new GeradorTesteJsonContext(serializador);
             }
-            else if (tipoPersistencia == TipoPersistencia.Orm)
-            {
-                contextoDados = new GeradorTesteDbContext();
+        }
 
-                repositorioDisciplina = new RepositorioDisciplinaOrm(contextoDados);
-            }
+        enum TipoPersistencia
+        {
+            Arquivo, Orm
         }
     }
 }

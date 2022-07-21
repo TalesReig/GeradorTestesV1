@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentResults;
+﻿using FluentResults;
 using GeradorTestes.Dominio;
 using GeradorTestes.Dominio.ModuloDisciplina;
 using Serilog;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GeradorTestes.Aplicacao.ModuloDisciplina
 {
@@ -103,13 +101,13 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
             }
         }
 
-        public Result<List<Disciplina>> SelecionarTodos()
+        public Result<List<Disciplina>> SelecionarTodos(bool incluirMaterias = false, bool incluirQuestoesDasMaterias=false)
         {
             Log.Logger.Debug("Tentando selecionar disciplinas...");
 
             try
             {
-                var disciplinas = repositorioDisciplina.SelecionarTodos();
+                var disciplinas = repositorioDisciplina.SelecionarTodos(incluirMaterias,incluirQuestoesDasMaterias);
 
                 Log.Logger.Information("Disciplinas selecionadas com sucesso");
 
@@ -172,7 +170,7 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
 
             if (NomeDuplicado(disciplina))
                 erros.Add(new Error($"Este nome \"{disciplina.Nome}\" já está cadastrado no sistema"));
-            
+
             if (erros.Any())
                 return Result.Fail(erros);
 

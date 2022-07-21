@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using GeradorTestes.Dominio;
 using GeradorTestes.Dominio.ModuloQuestao;
 using Serilog;
 using System;
@@ -10,10 +11,12 @@ namespace GeradorTestes.Aplicacao.ModuloQuestao
     public class ServicoQuestao
     {
         private IRepositorioQuestao repositorioQuestao;
+        private IContextoDados contextoDados;
 
-        public ServicoQuestao(IRepositorioQuestao repositorioQuestao)
+        public ServicoQuestao(IRepositorioQuestao repositorioQuestao, IContextoDados contextoDados)
         {
             this.repositorioQuestao = repositorioQuestao;
+            this.contextoDados = contextoDados;
         }
 
         public Result<Questao> Inserir(Questao questao)
@@ -28,6 +31,8 @@ namespace GeradorTestes.Aplicacao.ModuloQuestao
             try
             {
                 repositorioQuestao.Inserir(questao);
+
+                contextoDados.GravarDados();
 
                 Log.Logger.Information("Questao {QuestaoId} inserida com sucesso", questao.Id);
 
@@ -56,6 +61,8 @@ namespace GeradorTestes.Aplicacao.ModuloQuestao
             {
                 repositorioQuestao.Editar(questao);
 
+                contextoDados.GravarDados();
+
                 Log.Logger.Information("Questao {QuestaoId} editada com sucesso", questao.Id);
             }
             catch (Exception ex)
@@ -78,7 +85,9 @@ namespace GeradorTestes.Aplicacao.ModuloQuestao
             {
                 repositorioQuestao.Excluir(questao);
 
-                Log.Logger.Information("Questao {QuestaoId} editada com sucesso", questao.Id);
+                contextoDados.GravarDados();
+
+                Log.Logger.Information("Questao {QuestaoId} excluída com sucesso", questao.Id);
 
                 return Result.Ok();
             }
@@ -98,7 +107,11 @@ namespace GeradorTestes.Aplicacao.ModuloQuestao
 
             try
             {
-                return Result.Ok(repositorioQuestao.SelecionarTodos());
+                var questoes = repositorioQuestao.SelecionarTodos();
+
+                Log.Logger.Information("Questões selecionadas com sucesso");
+
+                return Result.Ok(questoes);
             }
             catch (Exception ex)
             {
@@ -117,13 +130,19 @@ namespace GeradorTestes.Aplicacao.ModuloQuestao
                 var questao = repositorioQuestao.SelecionarPorId(id);
 
                 if (questao == null)
-                    return Result.Fail("Questao não encontrado");
+                {
+                    Log.Logger.Warning("Questão {QuestaoId} não encontrada", id);
+
+                    return Result.Fail("Questão não encontrada");
+                }
+
+                Log.Logger.Information("Questão {QuestaoId} selecionada com sucesso", id);
 
                 return Result.Ok(questao);
             }
             catch (Exception ex)
             {
-                string msgErro = "Falha no sistema ao tentar selecionar a Questao";
+                string msgErro = "Falha no sistema ao tentar selecionar a Questão";
 
                 Log.Logger.Error(ex, msgErro + " {QuestaoId}", id);
 
@@ -131,6 +150,7 @@ namespace GeradorTestes.Aplicacao.ModuloQuestao
             }
         }
 
+        #region Métodos Privados
         private Result ValidarQuestao(Questao questao)
         {
             var validador = new ValidadorQuestao();
@@ -145,11 +165,13 @@ namespace GeradorTestes.Aplicacao.ModuloQuestao
 
                 erros.Add(new Error(validationFailure.ErrorMessage));
             }
-          
+
             if (erros.Any())
                 return Result.Fail(erros);
 
             return Result.Ok();
-        }       
+        }
+
+        #endregion
     }
 }

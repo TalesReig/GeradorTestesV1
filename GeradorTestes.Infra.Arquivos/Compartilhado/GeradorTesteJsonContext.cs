@@ -24,7 +24,7 @@ namespace eAgenda.Infra.Arquivos
 
             Questoes = new List<Questao>();
         }
-      
+
 
         public GeradorTesteJsonContext(ISerializador serializador) : this()
         {

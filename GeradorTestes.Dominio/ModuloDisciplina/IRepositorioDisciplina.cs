@@ -1,7 +1,11 @@
-﻿namespace GeradorTestes.Dominio.ModuloDisciplina
+﻿using System.Collections.Generic;
+
+namespace GeradorTestes.Dominio.ModuloDisciplina
 {
     public interface IRepositorioDisciplina : IRepositorio<Disciplina>
     {
         Disciplina SelecionarDisciplinaPorNome(string nome);
+
+        List<Disciplina> SelecionarTodos(bool incluirMaterias = false, bool incluirQuestoesDasMaterias = false);
     }
 }

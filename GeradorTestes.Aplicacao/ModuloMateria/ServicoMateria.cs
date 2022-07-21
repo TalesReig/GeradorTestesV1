@@ -1,21 +1,22 @@
 ﻿using FluentResults;
+using GeradorTestes.Dominio;
 using GeradorTestes.Dominio.ModuloMateria;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GeradorTestes.Aplicacao.ModuloMateria
 {
     public class ServicoMateria
     {
         private IRepositorioMateria repositorioMateria;
+        private IContextoDados contexto;
 
-        public ServicoMateria(IRepositorioMateria repositorioMateria)
+        public ServicoMateria(IRepositorioMateria repositorioMateria, IContextoDados contexto)
         {
             this.repositorioMateria = repositorioMateria;
+            this.contexto = contexto;
         }
 
         public Result<Materia> Inserir(Materia materia)
@@ -30,6 +31,8 @@ namespace GeradorTestes.Aplicacao.ModuloMateria
             try
             {
                 repositorioMateria.Inserir(materia);
+
+                contexto.GravarDados();
 
                 Log.Logger.Information("Materia {MateriaId} inserida com sucesso", materia.Id);
 
@@ -58,6 +61,8 @@ namespace GeradorTestes.Aplicacao.ModuloMateria
             {
                 repositorioMateria.Editar(materia);
 
+                contexto.GravarDados();
+
                 Log.Logger.Information("Materia {MateriaId} editada com sucesso", materia.Id);
             }
             catch (Exception ex)
@@ -80,7 +85,9 @@ namespace GeradorTestes.Aplicacao.ModuloMateria
             {
                 repositorioMateria.Excluir(materia);
 
-                Log.Logger.Information("Materia {MateriaId} editada com sucesso", materia.Id);
+                contexto.GravarDados();
+
+                Log.Logger.Information("Materia {MateriaId} excluída com sucesso", materia.Id);
 
                 return Result.Ok();
             }
@@ -100,7 +107,11 @@ namespace GeradorTestes.Aplicacao.ModuloMateria
 
             try
             {
-                return Result.Ok(repositorioMateria.SelecionarTodos());
+                var materias = repositorioMateria.SelecionarTodos();
+
+                Log.Logger.Information("Matérias selecionadas com sucesso");
+
+                return Result.Ok(materias);
             }
             catch (Exception ex)
             {
@@ -119,7 +130,13 @@ namespace GeradorTestes.Aplicacao.ModuloMateria
                 var materia = repositorioMateria.SelecionarPorId(id);
 
                 if (materia == null)
-                    return Result.Fail("Materia não encontrado");
+                {
+                    Log.Logger.Warning("Matéria {MateriaId} não encontrada", id);
+
+                    return Result.Fail("Matéria não encontrada");
+                }
+
+                Log.Logger.Information("Matéria {MateriaId} selecionada com sucesso", id);
 
                 return Result.Ok(materia);
             }
@@ -133,6 +150,7 @@ namespace GeradorTestes.Aplicacao.ModuloMateria
             }
         }
 
+        #region Métodos privados
         private Result ValidarMateria(Materia materia)
         {
             var validador = new ValidadorMateria();
@@ -165,5 +183,7 @@ namespace GeradorTestes.Aplicacao.ModuloMateria
                    materiaEncontrado.Nome == materia.Nome &&
                    materiaEncontrado.Id != materia.Id;
         }
+
+        #endregion
     }
 }

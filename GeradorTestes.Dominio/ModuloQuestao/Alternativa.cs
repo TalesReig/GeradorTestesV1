@@ -22,7 +22,7 @@ namespace GeradorTestes.Dominio.ModuloQuestao
         {
             Correta = registro.Correta;
             Letra = registro.Letra;
-            Resposta = registro.Resposta;            
+            Resposta = registro.Resposta;
         }
 
         public override bool Equals(object obj)

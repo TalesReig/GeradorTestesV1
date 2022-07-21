@@ -1,6 +1,5 @@
 ﻿using GeradorTestes.Aplicacao.ModuloDisciplina;
 using GeradorTestes.Aplicacao.ModuloQuestao;
-using GeradorTestes.Dominio.ModuloDisciplina;
 using GeradorTestes.Dominio.ModuloQuestao;
 using System.Collections.Generic;
 using System.Windows.Forms;

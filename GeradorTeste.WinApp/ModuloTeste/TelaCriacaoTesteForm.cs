@@ -1,5 +1,4 @@
 ﻿using FluentResults;
-using FluentValidation.Results;
 using GeradorTestes.Dominio.ModuloDisciplina;
 using GeradorTestes.Dominio.ModuloMateria;
 using GeradorTestes.Dominio.ModuloTeste;
@@ -90,7 +89,7 @@ namespace GeradorTeste.WinApp.ModuloTeste
 
                 DialogResult = DialogResult.None;
             }
-        }        
+        }
 
         private void cmbDisciplinas_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -117,7 +116,7 @@ namespace GeradorTeste.WinApp.ModuloTeste
             {
                 cmbMaterias.Items.Add(item);
             }
-        }      
+        }
 
         private void chkProvao_CheckedChanged(object sender, EventArgs e)
         {
