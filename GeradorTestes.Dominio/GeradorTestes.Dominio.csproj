@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ModuloQuestao\teste\**" />
+    <EmbeddedResource Remove="ModuloQuestao\teste\**" />
+    <None Remove="ModuloQuestao\teste\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.0.1" />
+    <PackageReference Include="SequentialGuidGenerator" Version="1.1.0" />
+  </ItemGroup>
+
+</Project>
