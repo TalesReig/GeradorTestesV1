@@ -10,7 +10,7 @@ namespace eAgenda.Infra.Arquivos.ModuloMateria
     {
         protected GeradorTesteJsonContext contextoDados;
 
-        public RepositorioMateriaEmArquivo(IContextoDados contexto)
+        public RepositorioMateriaEmArquivo(IContextoPersistencia contexto)
         {
             contextoDados = contexto as GeradorTesteJsonContext;
         }

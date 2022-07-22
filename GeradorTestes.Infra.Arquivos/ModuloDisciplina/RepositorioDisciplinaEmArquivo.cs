@@ -10,7 +10,7 @@ namespace eAgenda.Infra.Arquivos.ModuloDisciplina
     {
         protected GeradorTesteJsonContext contextoDados;
 
-        public RepositorioDisciplinaEmArquivo(IContextoDados contexto)
+        public RepositorioDisciplinaEmArquivo(IContextoPersistencia contexto)
         {
             contextoDados = contexto as GeradorTesteJsonContext;
         }

@@ -56,7 +56,7 @@ namespace GeradorTeste.WinApp.ModuloMateria
 
             var tela = new TelaCadastroMateriasForm(materias);
 
-            tela.Materia = materiaSelecionada; //.Clone();
+            tela.Materia = materiaSelecionada.Clone();
 
             tela.GravarRegistro = servicoMateria.Editar;
 
@@ -111,7 +111,7 @@ namespace GeradorTeste.WinApp.ModuloMateria
 
         private void CarregarMaterias()
         {
-            List<Materia> materias = servicoMateria.SelecionarTodos(incluirDisciplina: true).Value;
+            List<Materia> materias = servicoMateria.SelecionarTodos().Value;
 
             tabelaMaterias.AtualizarRegistros(materias);
 

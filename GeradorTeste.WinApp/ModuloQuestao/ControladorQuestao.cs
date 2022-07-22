@@ -53,7 +53,7 @@ namespace GeradorTeste.WinApp.ModuloQuestao
 
             var tela = new TelaCadastroQuestoesForm(disciplinas);
 
-            tela.Questao = questaoSelecionada; //.Clone();
+            tela.Questao = questaoSelecionada.Clone();
 
             tela.GravarRegistro = servicoQuestao.Editar;
 

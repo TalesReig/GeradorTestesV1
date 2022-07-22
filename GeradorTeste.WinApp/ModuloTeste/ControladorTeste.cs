@@ -54,7 +54,7 @@ namespace GeradorTeste.WinApp.ModuloTeste
 
             var tela = new TelaCriacaoTesteForm(disciplinas);
 
-            tela.Teste = testeSelecionado; //.Clone();
+            tela.Teste = testeSelecionado.Clone();
 
             tela.GravarRegistro = servicoTeste.Inserir;
 

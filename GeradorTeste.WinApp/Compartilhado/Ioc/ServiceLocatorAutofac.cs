@@ -8,27 +8,7 @@ namespace GeradorTeste.WinApp.Compartilhado.Ioc
 
         public ServiceLocatorAutofac()
         {
-            var builder = new ContainerBuilder();
-
-            //builder.RegisterType<RepositorioClienteEmBancoDados>().As<IRepositorioCliente>();
-            //builder.RegisterType<ServicoCliente>().AsSelf();
-            //builder.RegisterType<ControladorCliente>().AsSelf();
-
-            //builder.RegisterType<RepositorioGrupoVeiculosEmBancoDados>().As<IRepositorioGrupoVeiculos>();
-            //builder.RegisterType<ServicoGrupoVeiculo>().AsSelf();
-            //builder.RegisterType<ControladorGrupoVeiculos>().AsSelf();
-
-            //builder.RegisterType<RepositorioFuncionarioEmBancoDados>().As<IRepositorioFuncionario>();
-            //builder.RegisterType<ServicoFuncionario>().AsSelf();
-            //builder.RegisterType<ControladorFuncionario>().AsSelf();
-
-            //builder.RegisterType<RepositorioCondutorEmBancoDados>().As<IRepositorioCondutor>();
-            //builder.RegisterType<ServicoCondutor>().AsSelf();
-            //builder.RegisterType<ControladorCondutor>().AsSelf();
-
-            //builder.RegisterType<RepositorioTaxaEmBancoDados>().As<IRepositorioTaxa>();
-            //builder.RegisterType<ServicoTaxa>().AsSelf();
-            //builder.RegisterType<ControladorTaxa>().AsSelf();
+            var builder = new ContainerBuilder();           
 
             container = builder.Build();
         }

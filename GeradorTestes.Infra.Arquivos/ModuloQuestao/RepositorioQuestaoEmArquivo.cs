@@ -9,7 +9,7 @@ namespace eAgenda.Infra.Arquivos.ModuloQuestao
     {
         protected GeradorTesteJsonContext contextoDados;
 
-        public RepositorioQuestaoEmArquivo(IContextoDados contexto)
+        public RepositorioQuestaoEmArquivo(IContextoPersistencia contexto)
         {
             contextoDados = contexto as GeradorTesteJsonContext;
         }

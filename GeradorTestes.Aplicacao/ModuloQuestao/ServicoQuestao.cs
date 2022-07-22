@@ -11,9 +11,9 @@ namespace GeradorTestes.Aplicacao.ModuloQuestao
     public class ServicoQuestao
     {
         private IRepositorioQuestao repositorioQuestao;
-        private IContextoDados contextoDados;
+        private IContextoPersistencia contextoDados;
 
-        public ServicoQuestao(IRepositorioQuestao repositorioQuestao, IContextoDados contextoDados)
+        public ServicoQuestao(IRepositorioQuestao repositorioQuestao, IContextoPersistencia contextoDados)
         {
             this.repositorioQuestao = repositorioQuestao;
             this.contextoDados = contextoDados;

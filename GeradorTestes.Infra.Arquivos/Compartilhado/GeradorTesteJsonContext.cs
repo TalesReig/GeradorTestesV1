@@ -10,7 +10,7 @@ using System.Linq;
 namespace eAgenda.Infra.Arquivos
 {
     [Serializable]
-    public class GeradorTesteJsonContext : IContextoDados
+    public class GeradorTesteJsonContext : IContextoPersistencia
     {
         private readonly ISerializador serializador;
 

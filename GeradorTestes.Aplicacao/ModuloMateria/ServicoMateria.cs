@@ -11,9 +11,9 @@ namespace GeradorTestes.Aplicacao.ModuloMateria
     public class ServicoMateria
     {
         private IRepositorioMateria repositorioMateria;
-        private IContextoDados contexto;
+        private IContextoPersistencia contexto;
 
-        public ServicoMateria(IRepositorioMateria repositorioMateria, IContextoDados contexto)
+        public ServicoMateria(IRepositorioMateria repositorioMateria, IContextoPersistencia contexto)
         {
             this.repositorioMateria = repositorioMateria;
             this.contexto = contexto;
@@ -101,13 +101,13 @@ namespace GeradorTestes.Aplicacao.ModuloMateria
             }
         }
 
-        public Result<List<Materia>> SelecionarTodos(bool incluirDisciplina = false)
+        public Result<List<Materia>> SelecionarTodos()
         {
             Log.Logger.Debug("Tentando selecionar materias...");
 
             try
             {
-                var materias = repositorioMateria.SelecionarTodos(incluirDisciplina);
+                var materias = repositorioMateria.SelecionarTodos(incluirDisciplina:true);
 
                 Log.Logger.Information("Matérias selecionadas com sucesso");
 

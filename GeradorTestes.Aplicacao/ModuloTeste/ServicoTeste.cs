@@ -11,9 +11,9 @@ namespace GeradorTestes.Aplicacao.ModuloTeste
     public class ServicoTeste
     {
         private IRepositorioTeste repositorioTeste;
-        private IContextoDados contextoDados;
+        private IContextoPersistencia contextoDados;
 
-        public ServicoTeste(IRepositorioTeste repositorioTeste, IContextoDados contextoDados)
+        public ServicoTeste(IRepositorioTeste repositorioTeste, IContextoPersistencia contextoDados)
         {
             this.repositorioTeste = repositorioTeste;
             this.contextoDados = contextoDados;

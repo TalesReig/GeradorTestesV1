@@ -48,7 +48,7 @@ namespace GeradorTeste.WinApp.ModuloDisciplina
 
             var tela = new TelaCadastroDisciplinasForm();
 
-            tela.Disciplina = disciplinaSelecionada; //.Clone();
+            tela.Disciplina = disciplinaSelecionada.Clone();
 
             tela.GravarRegistro = servicoDisciplina.Editar;
 

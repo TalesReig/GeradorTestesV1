@@ -11,9 +11,9 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
     public class ServicoDisciplina
     {
         private IRepositorioDisciplina repositorioDisciplina;
-        private IContextoDados contexto;
+        private IContextoPersistencia contexto;
 
-        public ServicoDisciplina(IRepositorioDisciplina repositorioDisciplina, IContextoDados contexto)
+        public ServicoDisciplina(IRepositorioDisciplina repositorioDisciplina, IContextoPersistencia contexto)
         {
             this.repositorioDisciplina = repositorioDisciplina;
             this.contexto = contexto;

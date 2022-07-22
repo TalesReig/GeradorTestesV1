@@ -1,6 +1,6 @@
 ﻿namespace GeradorTestes.Dominio
 {
-    public interface IContextoDados
+    public interface IContextoPersistencia
     {
         void GravarDados();
     }
