@@ -101,13 +101,13 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
             }
         }
 
-        public Result<List<Disciplina>> SelecionarTodos(bool incluirMaterias = false, bool incluirQuestoesDasMaterias=false)
+        public Result<List<Disciplina>> SelecionarTodos(bool incluirMateriasEhQuestoes=false)
         {
             Log.Logger.Debug("Tentando selecionar disciplinas...");
 
             try
             {
-                var disciplinas = repositorioDisciplina.SelecionarTodos(incluirMaterias,incluirQuestoesDasMaterias);
+                var disciplinas = repositorioDisciplina.SelecionarTodos(incluirMateriasEhQuestoes);
 
                 Log.Logger.Information("Disciplinas selecionadas com sucesso");
 

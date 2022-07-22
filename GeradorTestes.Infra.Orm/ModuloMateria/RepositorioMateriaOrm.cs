@@ -38,6 +38,13 @@ namespace GeradorTestes.Infra.Orm.ModuloMateria
             return Materias.ToList();
         }
 
+        public List<Materia> SelecionarTodos(bool incluirDisciplina = false)
+        {
+            return Materias.
+                Include(x => x.Disciplina)
+                .ToList();
+        }
+
         public Materia SelecionarPorId(Guid id)
         {
             return Materias.Find(id);

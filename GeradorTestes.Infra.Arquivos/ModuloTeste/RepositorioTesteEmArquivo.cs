@@ -18,5 +18,9 @@ namespace eAgenda.Infra.Arquivos.ModuloTeste
             return contextoDados.Testes;
         }
 
+        public List<Teste> SelecionarTodos(bool incluirDisciplinaEhMateria)
+        {
+            return ObterRegistros();
+        }
     }
 }

@@ -48,19 +48,18 @@ namespace GeradorTestes.Infra.Orm.ModuloDisciplina
             return Disciplinas.FirstOrDefault(x => x.Nome == nome);
         }
 
-        public List<Disciplina> SelecionarTodos(
-            bool incluirMaterias = false, bool incluirQuestoesDasMaterias = false)
+        public List<Disciplina> SelecionarTodos(bool incluirMateriasEhQuestoes)
         {
-            var configQuery = Disciplinas;
+            List<Disciplina> disciplinas = null;
 
-            if (incluirMaterias && incluirQuestoesDasMaterias == false) 
-                configQuery.Include(x => x.Materias);
+            if (incluirMateriasEhQuestoes)
+                disciplinas = Disciplinas
+                    .Include(x => x.Materias)
+                    .ThenInclude(x => x.Questoes).ToList();
+            else
+                disciplinas = Disciplinas.ToList();
 
-            if (incluirMaterias && incluirQuestoesDasMaterias)
-                configQuery.Include(x => x.Materias)
-                    .ThenInclude(x => x.Questoes);
-
-            return configQuery.ToList();
+            return disciplinas;
         }
     }
 }

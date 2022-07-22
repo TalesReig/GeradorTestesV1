@@ -24,5 +24,10 @@ namespace eAgenda.Infra.Arquivos.ModuloMateria
         {
             return contextoDados.Materias.Where(x => x.Nome == nome).FirstOrDefault();
         }
+
+        public List<Materia> SelecionarTodos(bool incluirDisciplina = false)
+        {
+            return ObterRegistros();
+        }
     }
 }

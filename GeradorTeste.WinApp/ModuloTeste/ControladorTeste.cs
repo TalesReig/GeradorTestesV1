@@ -21,7 +21,7 @@ namespace GeradorTeste.WinApp.ModuloTeste
 
         public override void Inserir()
         {
-            var disciplinas = servicoDisciplina.SelecionarTodos(incluirMaterias: true, incluirQuestoesDasMaterias:true).Value;
+            var disciplinas = servicoDisciplina.SelecionarTodos(incluirMateriasEhQuestoes: true).Value;
 
             var tela = new TelaCriacaoTesteForm(disciplinas);
 
@@ -54,7 +54,7 @@ namespace GeradorTeste.WinApp.ModuloTeste
 
             var tela = new TelaCriacaoTesteForm(disciplinas);
 
-            tela.Teste = testeSelecionado.Clone();
+            tela.Teste = testeSelecionado; //.Clone();
 
             tela.GravarRegistro = servicoTeste.Inserir;
 

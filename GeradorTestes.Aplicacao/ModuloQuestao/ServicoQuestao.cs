@@ -123,11 +123,15 @@ namespace GeradorTestes.Aplicacao.ModuloQuestao
             }
         }
 
+        /// <summary>
+        /// Retorna uma questão a partir do seu identificador
+        /// </summary>
+        /// <returns>Questão com matéria e alternativas carregadas</returns>
         public Result<Questao> SelecionarPorId(Guid id)
         {
             try
             {
-                var questao = repositorioQuestao.SelecionarPorId(id);
+                var questao = repositorioQuestao.SelecionarPorId(id, incluirMateria: true, incluirAlternativas: true);
 
                 if (questao == null)
                 {

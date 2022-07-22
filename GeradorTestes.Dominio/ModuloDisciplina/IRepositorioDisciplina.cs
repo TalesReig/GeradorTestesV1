@@ -6,6 +6,6 @@ namespace GeradorTestes.Dominio.ModuloDisciplina
     {
         Disciplina SelecionarDisciplinaPorNome(string nome);
 
-        List<Disciplina> SelecionarTodos(bool incluirMaterias = false, bool incluirQuestoesDasMaterias = false);
+        List<Disciplina> SelecionarTodos(bool incluirMateriasEhQuestoes);
     }
 }

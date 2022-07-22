@@ -25,7 +25,7 @@ namespace eAgenda.Infra.Arquivos.ModuloDisciplina
             return contextoDados.Disciplinas.Where(x => x.Nome == nome).FirstOrDefault();
         }
 
-        public List<Disciplina> SelecionarTodos(bool incluirMaterias = false, bool incluirQuestoesDasMaterias = false)
+        public List<Disciplina> SelecionarTodos(bool incluirMateriasEhQuestoes)
         {
             return ObterRegistros();
         }

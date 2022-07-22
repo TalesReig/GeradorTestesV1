@@ -18,7 +18,7 @@ namespace GeradorTestes.Dominio.ModuloQuestao
             Enunciado = enunciado;
         }
 
-        public virtual List<Alternativa> Alternativas
+        public List<Alternativa> Alternativas
         {
             get; set;
         }

@@ -40,8 +40,19 @@ namespace GeradorTestes.Infra.Orm.ModuloTeste
 
         public Teste SelecionarPorId(Guid id)
         {
-            return Testes.Find(id);
+            return Testes
+                .Include(x => x.Disciplina)
+                .Include(x => x.Materia)
+                .Include(x => x.Questoes)
+                .Single(x => x.Id == id);
         }
 
+        public List<Teste> SelecionarTodos(bool incluirDisciplinaEhMateria)
+        {
+            return Testes
+                .Include(x => x.Disciplina)
+                .Include(x => x.Materia)
+                .ToList();
+        }
     }
 }

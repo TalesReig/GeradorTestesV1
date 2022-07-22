@@ -42,6 +42,34 @@ namespace GeradorTestes.Infra.Orm.ModuloQuestao
         {
             return Questoes.Find(id);
         }
+        
+        public Questao SelecionarPorId(Guid id, 
+            bool incluirMateria = false, bool incluirAlternativas = false)
+        {
+            Questao questao = null;
 
+            if (incluirMateria && incluirAlternativas)
+                questao = Questoes
+                    .Include(x => x.Materia)
+                    .Include(x => x.Alternativas)
+                    .SingleOrDefault(x => x.Id == id);
+
+            return questao;
+
+            //var questao = Questoes
+            //        .Single(x => x.Id == id);
+
+            //if (incluirAlternativas)
+            //    db.Entry(questao)
+            //        .Collection(x => x.Alternativas)
+            //        .Load();
+
+            //if (incluirMateria)
+            //    db.Entry(questao)
+            //        .Reference(x => x.Materia)
+            //        .Load();
+
+            //return questao;
+        }
     }
 }

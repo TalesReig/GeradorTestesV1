@@ -78,7 +78,7 @@ namespace GeradorTestes.Aplicacao.ModuloTeste
 
             try
             {
-                var testes = repositorioTeste.SelecionarTodos();
+                var testes = repositorioTeste.SelecionarTodos(incluirDisciplinaEhMateria: true);
 
                 Log.Logger.Information("Testes selecionados com sucesso");
 

@@ -101,13 +101,13 @@ namespace GeradorTestes.Aplicacao.ModuloMateria
             }
         }
 
-        public Result<List<Materia>> SelecionarTodos()
+        public Result<List<Materia>> SelecionarTodos(bool incluirDisciplina = false)
         {
             Log.Logger.Debug("Tentando selecionar materias...");
 
             try
             {
-                var materias = repositorioMateria.SelecionarTodos();
+                var materias = repositorioMateria.SelecionarTodos(incluirDisciplina);
 
                 Log.Logger.Information("Matérias selecionadas com sucesso");
 
