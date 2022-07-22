@@ -1,75 +1,67 @@
-﻿using GeradorTestes.Dominio.ModuloDisciplina;
+﻿using GeradorTestes.Dominio;
+using GeradorTestes.Dominio.ModuloDisciplina;
 using GeradorTestes.Dominio.ModuloMateria;
 using GeradorTestes.Dominio.ModuloQuestao;
 using GeradorTestes.Dominio.ModuloTeste;
+using GeradorTestes.Infra.Orm.ModuloDisciplina;
+using GeradorTestes.Infra.Orm.ModuloMateria;
+using GeradorTestes.Infra.Orm.ModuloQuestao;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 
 namespace GeradorTestes.Infra.Orm
 {
-    public class GeradorTesteDbContext : DbContext
+    public class GeradorTesteDbContext : DbContext, IContextoPersistencia
     {
-        public DbSet<Disciplina> Disciplinas { get; set; }
-        public DbSet<Materia> Materias { get; set; }
+        private string enderecoConexaoComBanco;
+
         public DbSet<Questao> Questoes { get; set; }
         public DbSet<Teste> Testes { get; set; }
 
+        public GeradorTesteDbContext()
+        {
+            enderecoConexaoComBanco = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=DbGeradorTestesOrm;Integrated Security=True";
+        }
+
         public GeradorTesteDbContext(string enderecoBanco)
         {
+            enderecoConexaoComBanco = enderecoBanco;
+        }
 
+        public void GravarDados()
+        {
+            SaveChanges();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var enderecoConexaoComBanco = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=DbGeradorTestesOrm;Integrated Security=True";
             optionsBuilder.UseSqlServer(enderecoConexaoComBanco);
-            optionsBuilder.LogTo(Console.WriteLine);
+
+            ILoggerFactory loggerFactory = LoggerFactory.Create((x) =>
+            {
+                //instalar o pacote Serilog.Extensions.Logging
+                x.AddSerilog(Log.Logger);
+            });
+
+            optionsBuilder.UseLoggerFactory(loggerFactory);
+
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Disciplina>(entidade =>
-            {
-                entidade.ToTable("TBDisciplina");
-                entidade.Property(x => x.Id).ValueGeneratedNever();
-                entidade.Property(x => x.Nome).HasColumnType("varchar(100)").IsRequired();
-            });
+            modelBuilder.ApplyConfiguration(new MapeadorDisciplinaOrm());
 
-            modelBuilder.Entity<Materia>(entidade =>
-            {
-                entidade.ToTable("TBMateria");
-                entidade.Property(x => x.Id).ValueGeneratedNever();
-                entidade.Property(x => x.Nome).IsRequired().HasColumnType("varchar(100)");
-                entidade.Property(x => x.Serie).HasConversion<int>();
-                entidade.HasOne(x => x.Disciplina);
-            });
+            modelBuilder.ApplyConfiguration(new MapeadorMateriaOrm());
 
-            modelBuilder.Entity<Questao>(entidade =>
-            {
-                entidade.ToTable("TBQuestao");
-                entidade.Property(x => x.Id).ValueGeneratedNever();
-                entidade.Property(x => x.Enunciado).IsRequired().HasColumnType("varchar(500)");
-                entidade.HasOne(x => x.Materia);
-                entidade.HasMany(x => x.Testes);
-            });
+            modelBuilder.ApplyConfiguration(new MapeadorQuestaoOrm());
 
-            modelBuilder.Entity<Alternativa>(entidade =>
-            {
-                entidade.ToTable("TBAlternativa");
-                entidade.Property(x => x.Id).ValueGeneratedNever();
-                entidade.Property(x => x.Resposta).IsRequired().HasColumnType("varchar(500)");
-                entidade.Property(x => x.Letra).IsRequired().HasColumnType("char(1)");
-                entidade.Property(x => x.Correta).IsRequired();
-
-                entidade.HasOne(x => x.Questao)
-                    .WithMany(x => x.Alternativas)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_TBAlternativa_TBQuestao");
-            });
+            modelBuilder.ApplyConfiguration(new MapeadorAlternativaOrm());
 
             modelBuilder.Entity<Teste>(entidade =>
             {
-
                 entidade.ToTable("TBTeste");
                 entidade.Property(x => x.Id).ValueGeneratedNever();
                 entidade.Property(x => x.Titulo).IsRequired().HasColumnType("varchar(250)");
@@ -86,5 +78,7 @@ namespace GeradorTestes.Infra.Orm
             });
 
         }
+
+
     }
 }

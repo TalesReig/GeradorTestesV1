@@ -11,12 +11,12 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
     public class ServicoDisciplina
     {
         private IRepositorioDisciplina repositorioDisciplina;
-        private IContextoPersistencia contexto;
+        private IContextoPersistencia contextoPersistencia;
 
         public ServicoDisciplina(IRepositorioDisciplina repositorioDisciplina, IContextoPersistencia contexto)
         {
             this.repositorioDisciplina = repositorioDisciplina;
-            this.contexto = contexto;
+            this.contextoPersistencia = contexto;
         }
 
         public Result<Disciplina> Inserir(Disciplina disciplina)
@@ -32,7 +32,7 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
             {
                 repositorioDisciplina.Inserir(disciplina);
 
-                contexto.GravarDados();
+                contextoPersistencia.GravarDados();
 
                 Log.Logger.Information("Disciplina {DisciplinaId} inserida com sucesso", disciplina.Id);
 
@@ -61,7 +61,7 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
             {
                 repositorioDisciplina.Editar(disciplina);
 
-                contexto.GravarDados();
+                contextoPersistencia.GravarDados();
 
                 Log.Logger.Information("Disciplina {DisciplinaId} editada com sucesso", disciplina.Id);
             }
@@ -85,7 +85,7 @@ namespace GeradorTestes.Aplicacao.ModuloDisciplina
             {
                 repositorioDisciplina.Excluir(disciplina);
 
-                contexto.GravarDados();
+                contextoPersistencia.GravarDados();
 
                 Log.Logger.Information("Disciplina {DisciplinaId} editada com sucesso", disciplina.Id);
 

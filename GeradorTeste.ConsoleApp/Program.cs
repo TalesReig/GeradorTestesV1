@@ -17,21 +17,22 @@ namespace GeradorTeste.ConsoleApp
 
         static void Main(string[] args)
         {
-            ConfigurarConnectionString();
+            //ConfigurarConnectionString();
 
-            LimparTabelas();
+            //LimparTabelas();
 
-            InserindoDisciplina(); //inserindo um registro sem relacionamento
+            //InserindoDisciplina(); //inserindo um registro sem relacionamento
 
-            InserindoMaterias(); //inserindo um registro com relacionamentos de dependencia
+            //InserindoMaterias(); //inserindo um registro com relacionamentos de dependencia
 
-            InserindoQuestoes(); //inserindo registros filhos 
+            //InserindoQuestoes(); //inserindo registros filhos 
 
-            AtualizandoQuestoes(); //atualização de registros com depedencias
+            //AtualizandoQuestoes(); //atualização de registros com depedencias
 
-            InserindoTestes(); //inserindo registros N x N
+            //InserindoTestes(); //inserindo registros N x N
         }
 
+        /** Códigos de exemplo
         private static void ConfigurarConnectionString()
         {
             var configuracao = new ConfigurationBuilder()
@@ -170,5 +171,6 @@ namespace GeradorTeste.ConsoleApp
 
             dbContext.SaveChanges();
         }
+        */
     }
 }

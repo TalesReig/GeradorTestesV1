@@ -6,7 +6,8 @@ using System.Linq;
 
 namespace eAgenda.Infra.Arquivos.ModuloDisciplina
 {
-    public class RepositorioDisciplinaEmArquivo : RepositorioEmArquivoBase<Disciplina>, IRepositorioDisciplina
+    public class RepositorioDisciplinaEmArquivo : 
+        RepositorioEmArquivoBase<Disciplina>, IRepositorioDisciplina
     {
         protected GeradorTesteJsonContext contextoDados;
 

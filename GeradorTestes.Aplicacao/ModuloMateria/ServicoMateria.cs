@@ -107,7 +107,7 @@ namespace GeradorTestes.Aplicacao.ModuloMateria
 
             try
             {
-                var materias = repositorioMateria.SelecionarTodos(incluirDisciplina:true);
+                var materias = repositorioMateria.SelecionarTodos(incluirDisciplina: true);
 
                 Log.Logger.Information("Matérias selecionadas com sucesso");
 

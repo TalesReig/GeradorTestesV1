@@ -56,7 +56,7 @@ namespace GeradorTeste.WinApp.ModuloMateria
 
             var tela = new TelaCadastroMateriasForm(materias);
 
-            tela.Materia = materiaSelecionada.Clone();
+            tela.Materia = materiaSelecionada; //.Clone();
 
             tela.GravarRegistro = servicoMateria.Editar;
 

@@ -13,6 +13,6 @@ namespace GeradorTestes.Dominio
 
         List<T> SelecionarTodos();
 
-        T SelecionarPorId(Guid numero);
+        T SelecionarPorId(Guid id);
     }
 }
