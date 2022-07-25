@@ -1,4 +1,6 @@
-﻿namespace GeradorTeste.WinApp
+﻿using System;
+
+namespace GeradorTeste.WinApp
 {
     partial class TelaPrincipalForm
     {
@@ -34,6 +36,7 @@
             this.materiasMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.questoesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configuracaoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolbox = new System.Windows.Forms.ToolStrip();
             this.btnInserir = new System.Windows.Forms.ToolStripButton();
             this.btnEditar = new System.Windows.Forms.ToolStripButton();
@@ -72,7 +75,8 @@
             this.disciplinaMenuItem,
             this.materiasMenuItem,
             this.questoesMenuItem,
-            this.testesMenuItem});
+            this.testesMenuItem,
+            this.configuracaoMenuItem});
             this.cadastrosToolStripMenuItem.Name = "cadastrosToolStripMenuItem";
             this.cadastrosToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.cadastrosToolStripMenuItem.Text = "Cadastros";
@@ -108,6 +112,14 @@
             this.testesMenuItem.Size = new System.Drawing.Size(149, 22);
             this.testesMenuItem.Text = "Testes";
             this.testesMenuItem.Click += new System.EventHandler(this.testesMenuItem_Click);
+            // 
+            // configuracaoMenuItem
+            // 
+            this.configuracaoMenuItem.Name = "configuracaoMenuItem";
+            this.configuracaoMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            this.configuracaoMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.configuracaoMenuItem.Text = "Configuração";
+            this.configuracaoMenuItem.Click += new System.EventHandler(this.configMenuItem_Click);
             // 
             // toolbox
             // 
@@ -291,7 +303,7 @@
             this.PerformLayout();
 
         }
-
+      
         #endregion
 
         private System.Windows.Forms.MenuStrip menu;
@@ -312,6 +324,7 @@
         private System.Windows.Forms.ToolStripMenuItem questoesMenuItem;
         private System.Windows.Forms.ToolStripButton btnGerarPdf;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem configuracaoMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testesMenuItem;
         private System.Windows.Forms.ToolStripButton btnDuplicar;
         private System.Windows.Forms.ToolStripButton btnVisualizar;

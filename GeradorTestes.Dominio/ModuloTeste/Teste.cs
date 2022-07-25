@@ -30,7 +30,11 @@ namespace GeradorTestes.Dominio.ModuloTeste
 
         public Materia Materia { get; set; }
 
-        public Guid MateriaId { get; set; }
+        /// <summary>
+        /// A matéria é opcional para cada teste
+        /// Nullable
+        /// </summary>
+        public Guid? MateriaId { get; set; }
 
         public int QuantidadeQuestoes { get; set; }
 

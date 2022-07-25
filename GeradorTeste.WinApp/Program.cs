@@ -1,5 +1,6 @@
 using GeradorTeste.Infra.Logging;
 using GeradorTeste.WinApp.Compartilhado.Ioc;
+using GeradorTestes.Infra.Orm.Compartilhado;
 using System;
 using System.Windows.Forms;
 
@@ -13,6 +14,7 @@ namespace GeradorTeste.WinApp
         [STAThread]
         static void Main()
         {
+            MigradorBancoDadosGeradorTeste.AtualizarBancoDados();
             ConfiguracaoLogsGeradorTeste.ConfigurarEscritaLogs();
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();

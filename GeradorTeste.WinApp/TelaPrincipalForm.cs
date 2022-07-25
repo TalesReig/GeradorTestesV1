@@ -1,4 +1,5 @@
 ﻿using GeradorTeste.WinApp.Compartilhado.Ioc;
+using GeradorTeste.WinApp.ModuloConfiguracao;
 using GeradorTeste.WinApp.ModuloDisciplina;
 using GeradorTeste.WinApp.ModuloMateria;
 using GeradorTeste.WinApp.ModuloQuestao;
@@ -54,6 +55,13 @@ namespace GeradorTeste.WinApp
         {
             ConfigurarTelaPrincipal(serviceLocator.Get<ControladorTeste>());
         }
+
+        private void configMenuItem_Click(object sender, EventArgs e)
+        {
+            var configuracaoControl = new ConfiguracaoControl();
+            panelRegistros.Controls.Add(configuracaoControl);
+        }
+
 
         private void btnInserir_Click(object sender, EventArgs e)
         {
